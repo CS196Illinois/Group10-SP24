@@ -43,7 +43,7 @@ class App extends Component {
       >
         <Tab.Screen name="Tasks" component={TasksScreen} />
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Shop" component={ShopScreen} />
+        {/* <Tab.Screen name="Shop" component={ShopScreen} /> */}
       </Tab.Navigator>
     </NavigationContainer>
     );

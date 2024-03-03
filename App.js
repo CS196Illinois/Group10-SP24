@@ -1,27 +1,51 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import Ionicons from "@expo/vector-icons/Ionicons"
+import HomeScreen from './src/pages/HomeScreen';
+import ShopScreen from './src/pages/ShopScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TasksScreen from './src/pages/TasksScreen';
+
+const Tab = createBottomTabNavigator();
 
 class App extends Component {
-  state = {
-    count: 0,
-  };
-
-  onPress = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  };
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={this.onPress}>
-          <Text>Click me</Text>
-        </TouchableOpacity>
-        <View>
-          <Text>You clicked {this.state.count} times</Text>
-        </View>
-      </View>
+      <NavigationContainer>
+      <Tab.Navigator
+        // set screenOptions to specify how the navbar should work
+        screenOptions={({ route }) => ({
+
+          // tabBarIcon is an object with values assigned based on the route name
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Tasks') {
+              iconName = focused ? 'list' : 'list-outline';
+            } else if (route.name === 'Home') {
+              iconName = focused
+                ? 'home'
+                : 'home-outline';
+            } else if (route.name === 'Shop') {
+              iconName = focused ? 'storefront' : 'storefront-outline';
+            }
+
+
+
+            // return any component that you want to display here for the navbar item
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+        <Tab.Screen name="Tasks" component={TasksScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Shop" component={ShopScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
     );
   }
 }

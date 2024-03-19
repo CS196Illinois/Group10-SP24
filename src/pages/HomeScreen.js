@@ -13,14 +13,15 @@ const HomeScreen = () => {
 
 	async function getUserNames() {
 		const { data } = await supabase.from("users").select();
+		// usernames = data;
 		setNames(data);
 	}
 	return (
-		<ul>
+		<View>
 		{usernames.map((user) => (
-			<li key={user.user_name}>{user.user_name}, {user.num_coins}</li>
+			<Text key={user.user_name}>{user.user_name}, {user.num_coins}</Text>
 		))}
-		</ul>
+		</View>
 	)
 }
 

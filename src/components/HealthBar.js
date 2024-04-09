@@ -24,14 +24,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row', // Change to row direction
         justifyContent: 'flex-end', // Move items to the right
         alignItems: 'center', // Vertically center items
-        paddingVertical: 10,
-        paddingHorizontal: 20, // Add horizontal padding for spacing from edges
+        //marginVertical: 80,
+        paddingVertical: 7,
+        paddingHorizontal: 10, // Add horizontal padding for spacing from edges
         width: '100%', // Ensure the container takes full width
     },
     barSection: {
-      width: 20,
-      height: 10,
-      borderRadius: 2,
+      width: 40,
+      height: 20,
+      borderRadius: 5,
       marginHorizontal: 1, // Add some spacing between sections if needed
     },
 });

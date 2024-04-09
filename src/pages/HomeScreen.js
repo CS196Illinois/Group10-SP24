@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import { supabase } from './initSupabase';
 import HealthBar from '../components/HealthBar';
@@ -22,7 +22,7 @@ const HomeScreen = () => {
 		setNames(data);
 	}
 
-	currentHealth = 3;
+	currentHealth = 2;
 	currentMood = 4;
 	/*Once pets are uploaded, change from constants to actual data
 	example:
@@ -30,6 +30,7 @@ const HomeScreen = () => {
 		currentMood = pet.happiness_level
 	those are the names of the values on the supabase
 	*/
+
 
 	return (
 		<View>

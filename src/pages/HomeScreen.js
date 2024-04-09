@@ -1,42 +1,24 @@
-import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native'
-import { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native'
+import { React, useEffect, useState } from 'react';
 import { supabase } from './initSupabase';
+import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
-import placeholderDog from '../assets/placeholderDog.png';
-import item1 from '../assets/item1.png';
+
+import dog from '../assets/placeholderDog.png';
+import apple from '../assets/apple.png';
 import bone from '../assets/bone.png';
 import collar from '../assets/collar.png';
-import Inventory from '../components/Inventory';
-
-import React from 'react';
 
 const HomeScreen = () => {
 
-	/*
-	const [usernames, setNames] = useState([]);
-	useEffect(() => {
-		getUserNames();
-	}, []);
-
-	async function getUserNames() {
-		const { data } = await supabase.from("users").select();
-		// usernames = data;
-		setNames(data);
-	}
-
-	{usernames.map((user) => (
-		<Text key={user.user_name}>{user.user_name}, {user.num_coins}</Text>
-	))}
-	*/
-
-	[currentHealth, setCurrentHealth] = useState(2);
-  	[currentMood, setCurrentMood] = useState(4);
+	[currentHealth, setCurrentHealth] = useState(5);
+  	[currentMood, setCurrentMood] = useState(5);
 	
 	items = [
-		{ name: 'Apple', image: item1, healthEffect: -1, moodEffect: 0 },
-		{ name: 'Bone', image: bone, healthEffect: 3, moodEffect: 2 },
-		{ name: 'Collar', image: collar, healthEffect: 0, moodEffect: -2},
+		{ name: 'Apple' , image: apple , healthEffect: -1, moodEffect:  0 },
+		{ name: 'Bone'  , image: bone  , healthEffect:  3, moodEffect:  2 },
+		{ name: 'Collar', image: collar, healthEffect:  0, moodEffect: -2 },
 	];
 	
 	const handleItemPress = (item) => {
@@ -56,7 +38,7 @@ const HomeScreen = () => {
 		<View>
 			<HealthBar health={currentHealth} />
 			<MoodBar mood={currentMood} />
-			<Image source={placeholderDog} style={{ width: 200, height: 200, alignSelf: 'center', marginVertical: 20 }} />
+			<Image source={dog} style={styles.petImage} />
 			<Inventory items={items} onItemPress={handleItemPress}/>
 		</View>
 	)
@@ -64,10 +46,34 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
 	container: {
-	  flex: 1,
-	  justifyContent: 'center',
-	  alignItems: 'center',
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	petImage : {
+		width: 200,
+		height: 200,
+		alignSelf: 'center',
+		marginVertical: 50,
 	}
 });
 
 export default HomeScreen;
+
+/*
+	Unused Code to display usernmaes and coin counts
+	const [usernames, setNames] = useState([]);
+	useEffect(() => {
+		getUserNames();
+	}, []);
+
+	async function getUserNames() {
+		const { data } = await supabase.from("users").select();
+		// usernames = data;
+		setNames(data);
+	}
+
+	{usernames.map((user) => (
+		<Text key={user.user_name}>{user.user_name}, {user.num_coins}</Text>
+	))}
+	*/

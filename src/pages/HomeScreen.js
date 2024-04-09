@@ -34,24 +34,22 @@ const HomeScreen = () => {
   	[currentMood, setCurrentMood] = useState(4);
 	
 	items = [
-		{ name: 'Item 1', image: item1, effect: 'health', amount: -2 },
-		{ name: 'Item 2', image: bone, effect: 'health', amount: 2 },
-		{ name: 'Item 3', image: collar, effect: 'mood', amount: -2},
-		// Add more items with image URIs
+		{ name: 'Apple', image: item1, healthEffect: -1, moodEffect: 0 },
+		{ name: 'Bone', image: bone, healthEffect: 3, moodEffect: 2 },
+		{ name: 'Collar', image: collar, healthEffect: 0, moodEffect: -2},
 	];
 	
-	/*Once pets are uploaded, change from constants to actual data
-	example:
-		currentHealth = pet.hunger_level
-		currentMood = pet.happiness_level
-	those are the names of the values on the supabase
-	*/
 	const handleItemPress = (item) => {
-		if (item.effect === 'health') {
-			setCurrentHealth((prevHealth) => Math.max(0, Math.min(prevHealth + item.amount, 5)));
-		} else if (item.effect === 'mood') {
-			setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.amount, 5)));
+		if (item.healthEffect) {
+		  setCurrentHealth((prevHealth) => Math.max(0, Math.min(prevHealth + item.healthEffect, 5)));
 		}
+		if (item.moodEffect) {
+		  setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.moodEffect, 5)));
+		}
+	};
+
+	const handleAddItem = (item) => {
+
 	};
 
 	return (
@@ -70,6 +68,6 @@ const styles = StyleSheet.create({
 	  justifyContent: 'center',
 	  alignItems: 'center',
 	}
-  });
+});
 
 export default HomeScreen;

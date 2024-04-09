@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const Inventory = ({ items }) => {
+const Inventory = ({ items, onItemPress }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Inventory</Text>
       <View style={styles.itemsContainer}>
         {items.map((item, index) => (
-          <TouchableOpacity key={index} style={styles.item}>
+          <TouchableOpacity key={index} style={styles.item} onPress={() => onItemPress(item)}>
             <Image source={item.image} style={styles.itemImage} />
           </TouchableOpacity>
         ))}
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   itemImage: {
-    width: 50, // Adjust width and height as needed
+    width: 50,
     height: 50,
   },
 });

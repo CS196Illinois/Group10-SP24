@@ -30,12 +30,13 @@ const HomeScreen = () => {
 	))}
 	*/
 
-	currentHealth = 2;
-	currentMood = 4;
+	[currentHealth, setCurrentHealth] = useState(2);
+  	[currentMood, setCurrentMood] = useState(4);
+	
 	items = [
-		{ name: 'Item 1', image: item1 },
-		{ name: 'Item 2', image: bone },
-		{ name: 'Item 3', image: collar },
+		{ name: 'Item 1', image: item1, effect: 'health', amount: -2 },
+		{ name: 'Item 2', image: bone, effect: 'health', amount: 2 },
+		{ name: 'Item 3', image: collar, effect: 'mood', amount: -2},
 		// Add more items with image URIs
 	];
 	
@@ -45,14 +46,20 @@ const HomeScreen = () => {
 		currentMood = pet.happiness_level
 	those are the names of the values on the supabase
 	*/
-
+	const handleItemPress = (item) => {
+		if (item.effect === 'health') {
+			setCurrentHealth((prevHealth) => Math.max(0, Math.min(prevHealth + item.amount, 5)));
+		} else if (item.effect === 'mood') {
+			setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.amount, 5)));
+		}
+	};
 
 	return (
 		<View>
 			<HealthBar health={currentHealth} />
 			<MoodBar mood={currentMood} />
 			<Image source={placeholderDog} style={{ width: 200, height: 200, alignSelf: 'center', marginVertical: 20 }} />
-			<Inventory items={items} />
+			<Inventory items={items} onItemPress={handleItemPress}/>
 		</View>
 	)
 }

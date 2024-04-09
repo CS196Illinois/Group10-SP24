@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const Inventory = ({ items }) => {
   return (
@@ -8,7 +8,7 @@ const Inventory = ({ items }) => {
       <View style={styles.itemsContainer}>
         {items.map((item, index) => (
           <TouchableOpacity key={index} style={styles.item}>
-            <Text>{item.name}</Text>
+            <Image source={item.image} style={styles.itemImage} />
           </TouchableOpacity>
         ))}
       </View>
@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     padding: 10,
     margin: 5,
+  },
+  itemImage: {
+    width: 50, // Adjust width and height as needed
+    height: 50,
   },
 });
 

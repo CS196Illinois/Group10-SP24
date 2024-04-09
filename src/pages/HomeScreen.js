@@ -4,6 +4,9 @@ import { supabase } from './initSupabase';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
 import placeholderDog from '../assets/placeholderDog.png';
+import item1 from '../assets/item1.png';
+import bone from '../assets/bone.png';
+import collar from '../assets/collar.png';
 import Inventory from '../components/Inventory';
 
 import React from 'react';
@@ -30,10 +33,10 @@ const HomeScreen = () => {
 	currentHealth = 2;
 	currentMood = 4;
 	items = [
-		{ name: 'Item 1' },
-		{ name: 'Item 2' },
-		{ name: 'Item 3' },
-		// Add more items as needed
+		{ name: 'Item 1', image: item1 },
+		{ name: 'Item 2', image: bone },
+		{ name: 'Item 3', image: collar },
+		// Add more items with image URIs
 	];
 	
 	/*Once pets are uploaded, change from constants to actual data

@@ -100,14 +100,14 @@ export async function buyItem(user_id, item_name) {
 		}
 		food.push(item_name);
 		console.log("After buying item, this is food: " + food);
-		await updateUser(user_id, {food: food})
+		await updateUser(user_id, {food: food, coins: user_data.coins - item_data.cost})
 	} else if (item_data.type == "toy") {
 		if (toys == null) {
 			toys = [];
 		}
 		toys.push(item_name);
 		console.log("After buying item, this is toys: " + toys);
-		await updateUser(user_id, {toys: toys})
+		await updateUser(user_id, {toys: toys, coins: user_data.coins - item_data.cost})
 	}
 	else if (item_data.type == "clothing") {
 		if (clothes == null) {
@@ -115,7 +115,7 @@ export async function buyItem(user_id, item_name) {
 		}
 		clothes.push(item_name);
 		console.log("After buying item, this is clothes: " + clothes);
-		await updateUser(user_id, {clothes: clothes})
+		await updateUser(user_id, {clothes: clothes, coins: user_data.coins - item_data.cost})
 	}
 	else {
 		console.log(item_name + " not of correct type! It is" + item_data.type)

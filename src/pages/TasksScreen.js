@@ -33,6 +33,14 @@ const TasksScreen = () => {
 
   return (
     <View style={styles.container}>
+
+<View style={styles.circleContainer}>
+        <View style={[styles.circle, { top: -30, left: -30, width: 120, height: 120}]} />
+        <View style={[styles.circle, { top: 270, right: -20}]} />
+        <View style={[styles.circle, { bottom: 20, right: -50, width: 140, height: 140 }]} />
+        <View style={[styles.circle, { bottom: -30, left: -70, width: 300, height: 300, borderRadius: 300,  }]} />
+      </View>
+
       <Text style={styles.tasksLabel}>Tasks</Text>
       <View style={styles.coinsContainer}>
         <Text style={styles.coinsText}>Coins: </Text>
@@ -80,12 +88,7 @@ const TasksScreen = () => {
             </TouchableOpacity>
    </View> ))}
       </View>
-      <View style={styles.circleContainer}>
-        <View style={[styles.circle, { top: 100, left: 10 }]} />
-        <View style={[styles.circle, { top: 300, right: 50 }]} />
-        <View style={[styles.circle, { bottom: 100, left: 200 }]} />
-        <View style={[styles.circle, { bottom: 300, right: 20 }]} />
-      </View>
+
       <TouchableOpacity style={styles.addButton} onPress={addTask}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>

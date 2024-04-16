@@ -73,12 +73,56 @@ export async function updateUser(user_id, new_user_data) {
 	.from('users')
 	.update(new_user_data)
 	.eq('id', user_id)
-
 	
 	if (error != null) {
 		console.warn("error: "+ JSON.stringify(error))
 	}
 }
+
+export async function updateCoins(user_id, new_coins) {
+	console.log("The number of coins after adding this task is: " + num_coins);
+	await updateUser(user_id, { num_coins: new_coins })
+}
+
+export async function buyItem(user_id, item_name) {
+	item_data = await getItem(item_name)
+	user_data = await getUser(user_id)
+	
+	food = user_data.food
+	clothes = user_data.clothes
+	toys = user_data.toys
+
+	console.log("food init: " + food)
+	
+	if (item_data.type == "food") {
+		if (food == null) {
+			food = [];
+		}
+		food.push(item_name);
+		console.log("After buying item, this is food: " + food);
+		await updateUser(user_id, {food: food})
+	} else if (item_data.type == "toy") {
+		if (toys == null) {
+			toys = [];
+		}
+		toys.push(item_name);
+		console.log("After buying item, this is toys: " + toys);
+		await updateUser(user_id, {toys: toys})
+	}
+	else if (item_data.type == "clothing") {
+		if (clothes == null) {
+			clothes = [];
+		}
+		clothes.push(item_name);
+		console.log("After buying item, this is clothes: " + clothes);
+		await updateUser(user_id, {clothes: clothes})
+	}
+	else {
+		console.log(item_name + " not of correct type! It is" + item_data.type)
+		return
+	}
+}
+// buy items
 
 export async function useItem(user_id, item_name) {
 

@@ -5,9 +5,9 @@ import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
 
-import dogHappy from '../assets/placeholderDog2.png';
-import dogSad from '../assets/placeholderDog2SADGE.png';
-import dogNeutral from '../assets/placeholderDog2meh.png';
+import dogHappy from '../assets/dogHappy.png';
+import dogSad from '../assets/dogSad.png';
+import dogNeutral from '../assets/dogMeh.png';
 import apple from '../assets/apple.png';
 import bone from '../assets/bone.png';
 import collar from '../assets/collar.png';
@@ -17,6 +17,18 @@ const HomeScreen = () => {
 	[currentHealth, setCurrentHealth] = useState(5);
   	[currentMood, setCurrentMood] = useState(5);
 	
+	useEffect(() => {
+		const interval = setInterval(() => {
+		  lowerStats();
+		}, 5000);
+		return () => clearInterval(interval);
+	}, []);
+
+	const lowerStats = () => {
+		setCurrentHealth((prevHealth) => prevHealth - 1);
+		setCurrentMood((prevMood) => prevMood - 1);
+	}
+
 	const determinePetImage = () => {
 		if (currentHealth <= 1 || currentMood <= 1) {
 		  return dogSad;

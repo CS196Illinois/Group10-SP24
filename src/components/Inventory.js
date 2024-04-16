@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   item: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#000000',
+    borderWidth: 3,
     padding: 10,
     margin: 5,
   },

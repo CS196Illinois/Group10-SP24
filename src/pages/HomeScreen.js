@@ -11,23 +11,38 @@ import dogNeutral from '../assets/dogMeh.png';
 import apple from '../assets/apple.png';
 import bone from '../assets/bone.png';
 import collar from '../assets/collar.png';
+import collarCut from '../assets/collarCut.png';
+import pinkCollar from '../assets/pinkCollar.png';
+import pinkCollarFront from '../assets/pinkCollarFront.png'
+import poison from '../assets/poison.png'
 
 const HomeScreen = () => {
 
 	[currentHealth, setCurrentHealth] = useState(5);
   	[currentMood, setCurrentMood] = useState(5);
-	
+	[wearingPinkCollar, setWearingPinkCollar] = useState(false);
+	[wearingBlackCollar, setWearingBlackCollar] = useState(false);
+
+	items = [
+		{ name: 'Apple' , image: apple , healthEffect: 1, moodEffect:  0 },
+		{ name: 'Bone'  , image: bone  , healthEffect:  3, moodEffect:  2 },
+		{ name: 'Pink' , image: pinkCollar, clothing: true, clothesMood: 2},
+		{ name: 'Spikes', image: collar, clothing: true, clothesMood: 2},
+		{ name: 'Poison', image: poison , healthEffect: -5, moodEffect:  -5 }
+	];
+
+	/*
+	 * Every 10 seconds
+	 * Lower Health and 
+	 * Mood by 1 point
+	 */
 	useEffect(() => {
 		const interval = setInterval(() => {
-		  lowerStats();
-		}, 5000);
+			setCurrentHealth((prevHealth) => prevHealth - 1);
+			setCurrentMood((prevMood) => prevMood - 1);
+		}, 10_000);
 		return () => clearInterval(interval);
 	}, []);
-
-	const lowerStats = () => {
-		setCurrentHealth((prevHealth) => prevHealth - 1);
-		setCurrentMood((prevMood) => prevMood - 1);
-	}
 
 	const determinePetImage = () => {
 		if (currentHealth <= 1 || currentMood <= 1) {
@@ -39,23 +54,36 @@ const HomeScreen = () => {
 		}
 	};
 	
-	items = [
-		{ name: 'Apple' , image: apple , healthEffect: -1, moodEffect:  0 },
-		{ name: 'Bone'  , image: bone  , healthEffect:  3, moodEffect:  2 },
-		{ name: 'Collar', image: collar, healthEffect:  0, moodEffect: -2 },
-	];
-	
 	const handleItemPress = (item) => {
 		if (item.healthEffect) {
-		  setCurrentHealth((prevHealth) => Math.max(0, Math.min(prevHealth + item.healthEffect, 5)));
+			setCurrentHealth((prevHealth) => Math.max(0, Math.min(prevHealth + item.healthEffect, 5)));
 		}
 		if (item.moodEffect) {
-		  setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.moodEffect, 5)));
+			setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.moodEffect, 5)));
 		}
-	};
+		if (item.clothing) {
+			if (item.name == "Pink") {
+				
+				if (wearingBlackCollar) 
+					setWearingBlackCollar(false);
 
-	const handleAddItem = (item) => {
+				if (!wearingPinkCollar) 
+					setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.clothesMood, 5)));
+				
+				setWearingPinkCollar(!wearingPinkCollar);
+			}
 
+			if (item.name == "Spikes") {
+				
+				if (wearingPinkCollar) 
+					setWearingPinkCollar(false);
+	
+				if (!wearingBlackCollar) 
+					setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.clothesMood, 5)));
+				
+				setWearingBlackCollar(!wearingBlackCollar);
+			}
+		}
 	};
 
 	return (
@@ -67,8 +95,14 @@ const HomeScreen = () => {
       		</View>
 			<HealthBar health={currentHealth} />
 			<MoodBar mood={currentMood} />
+
 			<Image source={determinePetImage()} style={styles.petImage} />
+			
+			{wearingPinkCollar && <Image source={pinkCollarFront} style={styles.collarStyle} />}
+			{wearingBlackCollar && <Image source={collarCut} style={styles.collarStyle} />}
+
 			<Inventory items={items} onItemPress={handleItemPress}/>
+	
 		</View>
 	)
 }
@@ -76,9 +110,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: 'rgba(50, 130, 190, 0.4)',
-		//justifyContent: 'center',
-		//alignItems: 'center',
+		backgroundColor: 'rgba(50, 130, 190, 0.4)'
 	},
 	petImage : {
 		width: 200,
@@ -110,6 +142,15 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(140, 140, 140, 1)', 
 		position: 'absolute',
 	},
+	collarStyle: {
+		height: 75, 
+		width: 120, 
+		position: 'absolute', 
+		left: 95, 
+		top: 185, 
+		resizeMode: 'stretch', 
+		transform: [{ rotate: '-15deg' }]
+	}
 });
 
 export default HomeScreen;

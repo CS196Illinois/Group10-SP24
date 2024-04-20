@@ -2,7 +2,9 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ShopBox from './ShopBox'
 import apple from '../assets/apple.png'
+import bone from '../assets/bone.png'
 import Confirmation from './Confirmation'
+import poison from '../assets/poison.png'
 
 const FoodRow = () => {
   return (
@@ -11,16 +13,18 @@ const FoodRow = () => {
     <View style={styles.container}>
 
       <ShopBox 
-        itemName="Raw Steak"
-        itemCost="100"
+        itemName="Poison"
+        itemCost="0"
+        itemImage={poison}
       />
 
       <ShopBox 
-        itemName="Roast Beef"
+        itemName="Bone"
         itemCost="75"
+        itemImage={bone}
       />
 
-      <Confirmation
+      <ShopBox
         itemName="Apple"
         itemCost="20"
         itemImage={apple}

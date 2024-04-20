@@ -1,6 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ShopBox from './ShopBox'
+import Confirmation from './Confirmation'
+import collar from '../assets/collar.png'
+import pinkCollar from '../assets/pinkCollar.png'
+import blackHat from '../assets/BlackHat.jpg'
 
 const ClothesRow = () => {
   return (
@@ -10,14 +14,17 @@ const ClothesRow = () => {
       <ShopBox
         itemName="Spiked Collar"
         itemCost="200"
+        itemImage={collar}
         />
       <ShopBox
         itemName="Pink Collar"
         itemCost="100"
+        itemImage={pinkCollar}
         />
       <ShopBox
         itemName="Black Hat"
         itemCost="150"
+        itemImage={blackHat}
         />
     </View>
     </View>
@@ -41,6 +48,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         color: 'black',
-        top: 15
+        top: 15,
+        position: 'relative',
+        zIndex: 0,
     }
 })

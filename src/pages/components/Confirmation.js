@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
     container1: {
         position: 'absolute',
         zIndex: 999,
-        top: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        //Center and bring forward confirmation
     },
     container: {
         backgroundColor: 'white',

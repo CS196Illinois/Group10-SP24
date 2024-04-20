@@ -1,6 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ShopBox from './ShopBox'
+import Confirmation from './Confirmation'
+import mouse from '../assets/StuffedMouse.jpg'
+import tennisball from '../assets/TennisBall.jpg'
+import ropetoy from '../assets/RopeToy.jpg'
 
 const ToyRow = () => {
   return (
@@ -10,14 +14,17 @@ const ToyRow = () => {
         <ShopBox
           itemName="Stuffed Mouse"
           itemCost="100"
+          itemImage={mouse}
         />
         <ShopBox
           itemName="Rope Toy"
           itemCost="75"
+          itemImage={ropetoy}
         />
         <ShopBox
           itemName="Tennis Ball"
           itemCost="35"
+          itemImage={tennisball}
         />
       </View>
     </View>
@@ -46,5 +53,6 @@ const styles = StyleSheet.create({
         color: 'black',
         top: -10,
         position: 'relative',
+        zIndex: 0,
     }
 })

@@ -12,7 +12,6 @@ import FoodRow from './components/FoodRow';
 import ToyRow from './components/ToyRow';
 import ClothesRow from './components/ClothesRow';
 
-
 const ShopScreen = () => {
     return (
       <View 
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'orange',
   },
   background: {
     position: 'absolute',

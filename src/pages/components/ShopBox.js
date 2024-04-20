@@ -1,15 +1,17 @@
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
+import { getUser, updateCoins } from '../../db_commands';
 
-const ShopBox = ({ itemName, itemCost, itemImage, pressReact }) => {
+const ShopBox = ({ itemName, itemCost, itemImage, UserCoins }) => {
 
-  
   
   const Pressed = () => {
-      // Check Coin Count
-      // Purchase Item
-      // Update Coin Count
+    
+    if ({UserCoins} > {itemCost}) {
+      buyItem(2, {itemName});
+      updateCoins(2, {UserCoins} - {itemCost});
+    }
   };
 
   return (

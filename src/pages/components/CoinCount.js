@@ -1,15 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { getUser } from '../../db_commands';
 
-const CoinCount = () => {
-    this.state = {
-        Coins: 100
-        // Retrieve user coin count
-    }
+const CoinCount = ({coins}) => {
+
+    // this.state = {
+    //     Coins: coins,
+    //     // Retrieve user coin count
+    // }
+
+
+  
 
   return (
     <Text style={styles.coinText}>
-      Coin Count: {this.state.Coins}
+      Coin Count: {coins}
     </Text>
   );
 };

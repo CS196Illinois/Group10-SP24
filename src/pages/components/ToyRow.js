@@ -6,25 +6,28 @@ import mouse from '../assets/StuffedMouse.jpg'
 import tennisball from '../assets/TennisBall.jpg'
 import ropetoy from '../assets/RopeToy.jpg'
 
-const ToyRow = () => {
+const ToyRow = ( {UserCoins1} ) => {
   return (
     <View style={styles.container2}>
       <Text style={styles.text}>Toys</Text>
       <View style={styles.container}>
         <ShopBox
           itemName="Stuffed Mouse"
-          itemCost="100"
+          itemCost={100}
           itemImage={mouse}
+          userCoins={UserCoins1}
         />
         <ShopBox
           itemName="Rope Toy"
-          itemCost="75"
+          itemCost={75}
           itemImage={ropetoy}
+          userCoins={UserCoins1}
         />
         <ShopBox
           itemName="Tennis Ball"
-          itemCost="35"
+          itemCost={35}
           itemImage={tennisball}
+          userCoins={UserCoins1}
         />
       </View>
     </View>

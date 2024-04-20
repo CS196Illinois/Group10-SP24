@@ -40,11 +40,11 @@ const TasksScreen = () => {
     });
     console.log(coins);
     setTasks(updatedTasks);
+    await updateCoins(2, coins + parseInt(tasks.find(task => task.id === id).points));
     setCoins(prevCoins => prevCoins + parseInt(tasks.find(task => task.id === id).points));
     
-    console.log("helooo")
-    await updateCoins(2, coins);
-    console.log(coins);
+    // console.log("helooo")
+    // console.log(coins);
   };
 
   return (

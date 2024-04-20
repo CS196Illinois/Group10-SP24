@@ -82,8 +82,8 @@ export async function updateUser(user_id, new_user_data) {
 }
 
 export async function updateCoins(user_id, new_coins) {
-	console.log("The number of coins after adding this task is: " + num_coins);
-	// await updateUser(user_id, { num_coins: new_coins })
+	// console.log("The number of coins after adding this task is: " + num_coins);
+	await updateUser(user_id, { num_coins: new_coins })
 }
 
 export async function buyItem(user_id, item_name) {

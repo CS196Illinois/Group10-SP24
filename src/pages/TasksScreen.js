@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { updateCoins, getUser } from '../db_commands';
 
 const TasksScreen = () => {
+  
   const [tasks, setTasks] = useState([
     { id: 1, task: 'Take out trash', points: '5', completed: false },
     { id: 2, task: 'Wash clothes', points: '10', completed: false },
     { id: 3, task: 'Time to wax the beard', points: '700', completed: false },
   ]);
-  const [coins, setCoins] = useState(100); 
+
+  const [coins, setCoins] = useState(0); 
+
+  async function getCoins() {
+    setCoins((await getUser(2)).num_coins);
+  }
+
+  useEffect(() => {
+    getCoins();
+  }, []);
 
   const addTask = () => {
     setTasks(prevTasks => [
@@ -20,15 +31,20 @@ const TasksScreen = () => {
     setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
   };
 
-  const completeTask = id => {
+  const completeTask = async id => {
     const updatedTasks = tasks.map(task => {
       if (task.id === id) {
         return { ...task, completed: true };
       }
       return task;
     });
+    console.log(coins);
     setTasks(updatedTasks);
     setCoins(prevCoins => prevCoins + parseInt(tasks.find(task => task.id === id).points));
+    
+    console.log("helooo")
+    await updateCoins(2, coins);
+    console.log(coins);
   };
 
   return (
@@ -79,7 +95,7 @@ const TasksScreen = () => {
               }}
             />
             {!task.completed && (
-              <TouchableOpacity onPress={() => completeTask(task.id)}>
+              <TouchableOpacity onPress={async () => completeTask(task.id)}>
                 <Text style={styles.completeButton}>Complete</Text>
               </TouchableOpacity>
             )}

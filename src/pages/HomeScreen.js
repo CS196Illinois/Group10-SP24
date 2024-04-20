@@ -4,6 +4,7 @@ import { supabase } from './initSupabase';
 import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
+import { getUserNames, useItem } from '../db_commands';
 
 import dogHappy from '../assets/dogHappy.png';
 import dogSad from '../assets/dogSad.png';
@@ -159,13 +160,14 @@ export default HomeScreen;
 	Unused Code to display usernmaes and coin counts
 	const [usernames, setNames] = useState([]);
 	useEffect(() => {
-		getUserNames();
+		updateUserNames();
 	}, []);
 
-	async function getUserNames() {
-		const { data } = await supabase.from("users").select();
-		// usernames = data;
+	async function updateUserNames() {
+        const data = await getUserNames();
 		setNames(data);
+
+        await useItem(2, "cookie");
 	}
 
 	{usernames.map((user) => (

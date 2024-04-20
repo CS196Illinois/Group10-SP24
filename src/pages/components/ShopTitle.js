@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     top: 30,
     left: 10,
     opacity: 0.75,
+    shadowColor: 'black',
+    shadowOffset: {width: 6, height: 6},
+    shadowOpacity: 0.3,
   },
 });
 

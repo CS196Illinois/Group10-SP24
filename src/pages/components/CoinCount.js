@@ -4,6 +4,7 @@ import React from 'react'
 const CoinCount = () => {
     this.state = {
         Coins: 100
+        // Retrieve user coin count
     }
 
   return (
@@ -24,5 +25,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: 15,
+    shadowColor: 'black',
+    shadowOffset: {width: 6, height: 6},
+    shadowOpacity: 0.3,
   },
 });

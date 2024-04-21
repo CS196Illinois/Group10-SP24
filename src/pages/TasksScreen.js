@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { updateCoins, getUser } from '../db_commands';
+import { useIsFocused } from '@react-navigation/native'
+
 
 const TasksScreen = () => {
-  
+  const isFocused = useIsFocused();
+
   const [tasks, setTasks] = useState([
     { id: 1, task: 'Take out trash', points: '5', completed: false },
     { id: 2, task: 'Wash clothes', points: '10', completed: false },
@@ -17,8 +20,10 @@ const TasksScreen = () => {
   }
 
   useEffect(() => {
-    getCoins();
-  }, []);
+    if (isFocused) {
+      getCoins();
+    }
+  }, [isFocused]);
 
   const addTask = () => {
     setTasks(prevTasks => [

@@ -105,19 +105,25 @@ const HomeScreen = () => {
 		getUserPetStats();
 		setUserInventoryAndMood();
 		// console.log('Current Inventory: ', inventory);
-		// const interval = setInterval(() => {
-		// 	setCurrentHealth(async (prevHealth) => {
-		// 		const newHealth = prevHealth - 1;
-		// 		await updatePetHunger(pet, newHealth);
-		// 		return newHealth;
-		// 	});
-		// 	setCurrentMood(async (prevMood) => {
-		// 		const newMood = prevMood - 1;
-		// 		await updatePetHappiness(pet, newMood);
-		// 		return newMood;
-		// 	});
-		// }, 120_000);
-		// return () => clearInterval(interval);
+		const interval = setInterval(async () => {
+			let updatedHealth = currentHealth - 1;
+			let updatedMood = currentMood - 1;
+			await updatePetHappiness(pet, updatedMood);
+			setCurrentMood(updatedMood);
+			await updatePetHunger(pet, updatedHealth);
+			setCurrentHealth(updatedHealth);
+			// setCurrentHealth(async (prevHealth) => {
+			// 	const newHealth = prevHealth - 1;
+			// 	await updatePetHunger(pet, newHealth);
+			// 	return newHealth;
+			// });
+			// setCurrentMood(async (prevMood) => {
+			// 	const newMood = prevMood - 1;
+			// 	await updatePetHappiness(pet, newMood);
+			// 	return newMood;
+			// });
+		}, 45_000);
+		return () => clearInterval(interval);
 	}, []);
 
 	const determinePetImage = () => {

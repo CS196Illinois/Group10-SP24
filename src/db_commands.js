@@ -39,11 +39,11 @@ export async function getPetHunger(pet_id) {
 
 
 
-export async function updatePetHappiness(pet_id, incrementAmount) {
-	happiness_level = await getPetHappiness(pet_id)
+export async function updatePetHappiness(pet_id, new_level) {
+	// happiness_level = await getPetHappiness(pet_id)
 	const { data, error } = await supabase
 	.from('pets')
-	.update({ "happiness_level": happiness_level + incrementAmount })
+	.update({ "happiness_level": new_level })
 	.eq('pet_id', pet_id)
 	.select()
 	if (error != null) {
@@ -53,16 +53,14 @@ export async function updatePetHappiness(pet_id, incrementAmount) {
 }
 
 
-export async function updatePetHunger(pet_id, incrementAmount) {
-	hunger_level = await getPetHunger(pet_id)
+export async function updatePetHunger(pet_id, new_level) {
+	// hunger_level = await getPetHunger(pet_id)
 	// console.log("hunger level increase: "+hunger_level)
-
 	const { data, error } = await supabase
 	.from('pets')
-	.update({ "hunger_level": hunger_level + incrementAmount })
+	.update({ "hunger_level": new_level })
 	.eq('pet_id', pet_id)
 	.select()
-	
 	if (error != null) {
 		console.warn("error: "+ JSON.stringify(error))
 	}

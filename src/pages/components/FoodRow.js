@@ -52,13 +52,14 @@ const styles = StyleSheet.create({
     container2: {
         flex: 1,
         flexDirection: 'column',
-        top: 150,
+        top: 140,
     },
     text: {
         fontSize: 15,
         fontWeight: 'bold',
         color: 'black',
-        top: -10,
+        top: -5,
+        left: 10,
         zIndex: 10,
     }
 })

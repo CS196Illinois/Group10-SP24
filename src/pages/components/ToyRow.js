@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         color: 'black',
-        top: -10,
+        top: -5,
+        left: 10,
         position: 'relative',
         zIndex: 0,
     }

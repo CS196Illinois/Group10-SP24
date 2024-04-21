@@ -57,5 +57,7 @@ const styles = StyleSheet.create({
         top: 15,
         position: 'relative',
         zIndex: 0,
+        left: 10,
+        top: 20,
     }
 })

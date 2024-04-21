@@ -96,7 +96,7 @@ const HomeScreen = () => {
 	};
 
 	/*
-	 * Every 10 seconds
+	 * Every 30 seconds
 	 * Lower Health and 
 	 * Mood by 1 point
 	 */
@@ -112,16 +112,6 @@ const HomeScreen = () => {
 			setCurrentMood(updatedMood);
 			await updatePetHunger(pet, updatedHealth);
 			setCurrentHealth(updatedHealth);
-			// setCurrentHealth(async (prevHealth) => {
-			// 	const newHealth = prevHealth - 1;
-			// 	await updatePetHunger(pet, newHealth);
-			// 	return newHealth;
-			// });
-			// setCurrentMood(async (prevMood) => {
-			// 	const newMood = prevMood - 1;
-			// 	await updatePetHappiness(pet, newMood);
-			// 	return newMood;
-			// });
 		}, 45_000);
 		return () => clearInterval(interval);
 	}, []);

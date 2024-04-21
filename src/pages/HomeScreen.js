@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { React, useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native'
 import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
@@ -25,6 +26,7 @@ import stuffed_mouse from './assets/StuffedMouse.png';
 import tennis_ball from './assets/TennisBall.png';
 
 const HomeScreen = () => {
+	const isFocused = useIsFocused();
 
 	[currentHealth, setCurrentHealth] = useState(0);
   	[currentMood, setCurrentMood] = useState(0);
@@ -129,30 +131,32 @@ const HomeScreen = () => {
 	 * Mood by 1 point
 	 */
 	useEffect(() => {
-		getCoins();
-		getUserPetStats();
-		setUserInventoryAndMood();
-		// console.log('Current Inventory: ', inventory);
-		const interval = setInterval(async () => {
-			if (currentHealth > 0 && currentMood > 0) {
-				let updatedHealth = currentHealth - 1;
-				let updatedMood = currentMood - 1;
-				await updatePetHappiness(pet, updatedMood);
-				setCurrentMood(updatedMood);
-				await updatePetHunger(pet, updatedHealth);
-				setCurrentHealth(updatedHealth);
-			} else if (currentHealth > 0) {
-				let updatedHealth = currentHealth - 1;
-				await updatePetHunger(pet, updatedHealth);
-				setCurrentHealth(updatedHealth);
-			} else if (currentMood > 0) { // currentMood > 0
-				let updatedMood = currentMood - 1;
-				await updatePetHappiness(pet, updatedMood);
-				setCurrentMood(updatedMood);
-			} else { } // do nothing bc both are below zero
-		}, 45_000);
-		return () => clearInterval(interval);
-	}, []);
+		if (isFocused) {
+			getCoins();
+			getUserPetStats();
+			setUserInventoryAndMood();
+			// console.log('Current Inventory: ', inventory);
+			const interval = setInterval(async () => {
+				if (currentHealth > 0 && currentMood > 0) {
+					let updatedHealth = currentHealth - 1;
+					let updatedMood = currentMood - 1;
+					await updatePetHappiness(pet, updatedMood);
+					setCurrentMood(updatedMood);
+					await updatePetHunger(pet, updatedHealth);
+					setCurrentHealth(updatedHealth);
+				} else if (currentHealth > 0) {
+					let updatedHealth = currentHealth - 1;
+					await updatePetHunger(pet, updatedHealth);
+					setCurrentHealth(updatedHealth);
+				} else if (currentMood > 0) { // currentMood > 0
+					let updatedMood = currentMood - 1;
+					await updatePetHappiness(pet, updatedMood);
+					setCurrentMood(updatedMood);
+				} else { } // do nothing bc both are below zero
+			}, 45_000);
+			return () => clearInterval(interval);
+		}
+	}, [isFocused]);
 
 	const determinePetImage = () => {
 		if (currentHealth <= 1 || currentMood <= 1) {

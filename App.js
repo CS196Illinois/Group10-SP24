@@ -41,8 +41,8 @@ class App extends Component {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Tasks" component={TasksScreen} />
         <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Tasks" component={TasksScreen} />
         <Tab.Screen name="Shop" component={ShopScreen} />
       </Tab.Navigator>
     </NavigationContainer>

@@ -19,6 +19,10 @@ import pink_collar from './assets/pinkCollar.png';
 import collar from './assets/collar.png';
 import collarCut from '../assets/collarCut.png';
 import pinkCollarFront from '../assets/pinkCollarFront.png'
+// Importing Toys
+import rope_toy from './assets/RopeToy.png';
+import stuffed_mouse from './assets/StuffedMouse.png';
+import tennis_ball from './assets/TennisBall.png';
 
 const HomeScreen = () => {
 
@@ -73,6 +77,7 @@ const HomeScreen = () => {
 								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
 							});
 							break;
+						// clothing
 						case "BlackHat":
 							tmp_items.push({
 								name: item, image: black_hat, type: item_data.type, 
@@ -88,6 +93,25 @@ const HomeScreen = () => {
 						case "collar":
 							tmp_items.push({
 								name: item, image: collar, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						// toys
+						case "RopeToy":
+							tmp_items.push({
+								name: item, image: rope_toy, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "StuffedMouse":
+							tmp_items.push({
+								name: item, image: stuffed_mouse, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "TennisBall":
+							tmp_items.push({
+								name: item, image: tennis_ball, type: item_data.type, 
 								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
 							});
 							break;
@@ -198,7 +222,6 @@ const HomeScreen = () => {
 				<View style={[styles.dropShadow, { bottom: 330, left: 140 }]} />
       		</View>
 			<Text style={styles.coinText}>{coins} coins</Text>
-			{/* <Text>User 2 Has {coins}.</Text> */}
 			<HealthBar health={currentHealth} />
 			<MoodBar mood={currentMood} />
 

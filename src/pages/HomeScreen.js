@@ -1,11 +1,9 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { React, useEffect, useState } from 'react';
-import { supabase } from './initSupabase';
 import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
-import CoinCount from './components/CoinCount';
-import { getUser, getItem, getPetHappiness, getPetHunger, updatePetHappiness, updatePetHunger, updateCoins } from '../db_commands';
+import { getUser, getItem, useItem, getPetHappiness, getPetHunger, updatePetHappiness, updatePetHunger } from '../db_commands';
 
 // Importing Dog States
 import dogHappy from '../assets/dogHappy.png';
@@ -84,6 +82,12 @@ const HomeScreen = () => {
 						case "pinkCollar":
 							tmp_items.push({
 								name: item, image: pink_collar, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "collar":
+							tmp_items.push({
+								name: item, image: collar, type: item_data.type, 
 								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
 							});
 							break;
@@ -179,6 +183,11 @@ const HomeScreen = () => {
 				setCurrentMood(updatedMood);
 			}
 		}
+
+		// removing the item from the inventory after using them
+		const newItems = items.filter(i => i !== item);
+		setItems(newItems);
+		await useItem(2, item.name);
 	};
 
 	return (

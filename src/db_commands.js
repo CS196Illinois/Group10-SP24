@@ -134,26 +134,26 @@ export async function useItem(user_id, item_name) {
   	console.log("food init: "+ food)
 
 	if (food != undefined && food.includes(item_name)) {
-		console.log("found cookie!!!")
-		food = food.filter(item => item !== item_name);
-		console.log("updated food: "+food)
-		await updateUser(user_id, {food: food})
-	}
-	
-	else if (clothes != undefined && clothes.includes(item_name)) {
-		clothes = clothes.filter(item => item !== item_name);
-		await updateUser(user_id, {clothes: clothes})
-	}
-
-	else if (toys != undefined && toys.includes(item_name)) {
-		toys = toys.filter(item => item !== item_name);
+		// console.log("found cookie!!!")
+		let to_be_removed_index = food.indexOf(item_name);
+		food.splice(to_be_removed_index,1);
+		console.log("updated food: " + food);
+		// food = food.filter(item => item !== item_name);
+		await updateUser(user_id, {food: food});
+	} else if (clothes != undefined && clothes.includes(item_name)) {
+		let to_be_removed_index = clothes.indexOf(item_name);
+		clothes.splice(to_be_removed_index,1);
+		console.log("updated clothes: " + clothes);
+		// clothes = clothes.filter(item => item !== item_name);
+		await updateUser(user_id, {clothes: clothes});
+	} else if (toys != undefined && toys.includes(item_name)) {
+		let to_be_removed_index = toys.indexOf(item_name);
+		toys.splice(to_be_removed_index,1);
+		console.log("updated toys: " + toys);
+		// toys = toys.filter(item => item !== item_name);
 		await updateUser(user_id, {toys: toys})
-	}
-	else {
+	} else {
 		console.log("item not in inventory")
 		return
 	}
-
-	await updatePetHappiness(user_data.pet, item_data.happiness_level)
-	await updatePetHunger(user_data.pet, item_data.hunger_level)
 }

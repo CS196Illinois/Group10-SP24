@@ -6,25 +6,28 @@ import collar from '../assets/collar.png'
 import pinkCollar from '../assets/pinkCollar.png'
 import blackHat from '../assets/BlackHat.png'
 
-const ClothesRow = () => {
+const ClothesRow = ({UserCoins1}) => {
   return (
     <View style={styles.container2}>
         <Text style={styles.text}> Clothes </Text>
     <View style={styles.container}>
       <ShopBox
-        itemName="Spiked Collar"
-        itemCost="200"
+        itemName="collar"
+        itemCost={200}
         itemImage={collar}
+        userCoins={UserCoins1}
         />
       <ShopBox
-        itemName="Pink Collar"
-        itemCost="100"
+        itemName="pinkCollar"
+        itemCost={100}
         itemImage={pinkCollar}
+        userCoins={UserCoins1}
         />
       <ShopBox
-        itemName="Black Hat"
-        itemCost="150"
+        itemName="BlackHat"
+        itemCost={150}
         itemImage={blackHat}
+        userCoins={UserCoins1}
         />
     </View>
     </View>

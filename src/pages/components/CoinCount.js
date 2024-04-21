@@ -1,14 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { getUser } from '../../db_commands';
 
-const CoinCount = () => {
-    this.state = {
-        Coins: 100
-    }
+const CoinCount = ({coins}) => {
+
+    // this.state = {
+    //     Coins: coins,
+    //     // Retrieve user coin count
+    // }
+
+
+  
 
   return (
     <Text style={styles.coinText}>
-      Coin Count: {this.state.Coins}
+      Coin Count: {coins}
     </Text>
   );
 };
@@ -24,5 +30,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: 15,
+    shadowColor: 'black',
+    shadowOffset: {width: 6, height: 6},
+    shadowOpacity: 0.3,
   },
 });

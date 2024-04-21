@@ -6,7 +6,7 @@ import collar from '../assets/collar.png'
 import pinkCollar from '../assets/pinkCollar.png'
 import blackHat from '../assets/BlackHat.png'
 
-const ClothesRow = ({UserCoins1}) => {
+const ClothesRow = ({UserCoins1, onPurchase}) => {
   return (
     <View style={styles.container2}>
         <Text style={styles.text}> Clothes </Text>
@@ -16,18 +16,21 @@ const ClothesRow = ({UserCoins1}) => {
         itemCost={200}
         itemImage={collar}
         userCoins={UserCoins1}
+        onPurchase={onPurchase}
         />
       <ShopBox
         itemName="pinkCollar"
         itemCost={100}
         itemImage={pinkCollar}
         userCoins={UserCoins1}
+        onPurchase={onPurchase}
         />
       <ShopBox
         itemName="BlackHat"
         itemCost={150}
         itemImage={blackHat}
         userCoins={UserCoins1}
+        onPurchase={onPurchase}
         />
     </View>
     </View>

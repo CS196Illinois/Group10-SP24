@@ -6,7 +6,7 @@ import bone from '../assets/bone.png'
 import Confirmation from './Confirmation'
 import poison from '../assets/poison.png'
 
-const FoodRow = ({ UserCoins1 }) => {
+const FoodRow = ({ UserCoins1, onPurchase }) => {
   return (
     <View style={styles.container2}>
         <Text style={styles.text}>Food</Text>
@@ -17,6 +17,7 @@ const FoodRow = ({ UserCoins1 }) => {
         itemCost={0}
         itemImage={poison}
         userCoins={UserCoins1}
+        onPurchase={onPurchase}
       />
 
       <ShopBox 
@@ -24,6 +25,7 @@ const FoodRow = ({ UserCoins1 }) => {
         itemCost={75}
         itemImage={bone}
         userCoins={UserCoins1}
+        onPurchase={onPurchase}
       />
 
       <ShopBox
@@ -31,6 +33,7 @@ const FoodRow = ({ UserCoins1 }) => {
         itemCost={20}
         itemImage={apple}
         userCoins={UserCoins1}
+        onPurchase={onPurchase}
       />
 
     </View>

@@ -6,7 +6,7 @@ import mouse from '../assets/StuffedMouse.png'
 import tennisball from '../assets/TennisBall.png'
 import ropetoy from '../assets/RopeToy.png'
 
-const ToyRow = ( {UserCoins1} ) => {
+const ToyRow = ( {UserCoins1, onPurchase} ) => {
   return (
     <View style={styles.container2}>
       <Text style={styles.text}>Toys</Text>
@@ -16,18 +16,21 @@ const ToyRow = ( {UserCoins1} ) => {
           itemCost={100}
           itemImage={mouse}
           userCoins={UserCoins1}
+          onPurchase={onPurchase}
         />
         <ShopBox
           itemName="RopeToy"
           itemCost={75}
           itemImage={ropetoy}
           userCoins={UserCoins1}
+          onPurchase={onPurchase}
         />
         <ShopBox
           itemName="TennisBall"
           itemCost={35}
           itemImage={tennisball}
           userCoins={UserCoins1}
+          onPurchase={onPurchase}
         />
       </View>
     </View>

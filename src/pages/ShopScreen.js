@@ -1,5 +1,4 @@
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native'
-// import { supabase } from './initSupabase';
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import Circle1 from './components/Circles/Circle1';
@@ -12,22 +11,25 @@ import FoodRow from './components/FoodRow';
 import ToyRow from './components/ToyRow';
 import ClothesRow from './components/ClothesRow';
 import { useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native'
 import { getUser } from '../db_commands';
 
 const ShopScreen = () => {
+	const isFocused = useIsFocused();
 
   const[coinCounts, setCoins] = useState(0);
 
+  async function getCoins() {
+    setCoins((await getUser(2)).num_coins);  
+  }
+  
   
   useEffect(() => {
-
-    async function mySetCoins() {
-      setCoins((await getUser(2)).num_coins);
+    if (isFocused) {
+      getCoins();
     }
-
-    mySetCoins();
     console.log("coin state: "+coinCounts)
-  })
+  }, [isFocused]);
 
 
     return (
@@ -43,9 +45,9 @@ const ShopScreen = () => {
         <ShopTitle />
         <CoinCount coins={coinCounts} />
         <View style={styles.container2}>
-         <FoodRow UserCoins1={coinCounts}/>
-         <ToyRow UserCoins1={coinCounts}/>
-         <ClothesRow UserCoins1={coinCounts}/>
+         <FoodRow UserCoins1={coinCounts} onPurchase={getCoins}/>
+         <ToyRow UserCoins1={coinCounts} onPurchase={getCoins}/>
+         <ClothesRow UserCoins1={coinCounts} onPurchase={getCoins}/>
         </View>
       </View>
     )

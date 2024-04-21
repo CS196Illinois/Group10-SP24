@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { getUser, updateCoins, buyItem } from '../../db_commands';
 
-const ShopBox = ({ itemName, itemCost, itemImage, userCoins }) => {
+const ShopBox = ({ itemName, itemCost, itemImage, userCoins, onPurchase }) => {
 
   
   const Pressed = async () => {
@@ -11,11 +11,10 @@ const ShopBox = ({ itemName, itemCost, itemImage, userCoins }) => {
     console.log(userCoins)
     console.log(itemCost)
     
-    if (userCoins > itemCost) {
+    if (userCoins >= itemCost) {
       console.log("buying item")
       await buyItem(2, itemName);
-
-      // updateCoins(2, UserCoins - itemCost);
+      onPurchase();
     }
   };
 

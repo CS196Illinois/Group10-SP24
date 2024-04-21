@@ -154,7 +154,7 @@ const HomeScreen = () => {
 					await updatePetHappiness(pet, updatedMood);
 					setCurrentMood(updatedMood);
 				} else { } // do nothing bc both are below zero
-			}, 45_000);
+			}, 10_000);
 			return () => clearInterval(interval);
 		}
 	}, [isFocused]);

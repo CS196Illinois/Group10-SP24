@@ -13,21 +13,21 @@ const FoodRow = ({ UserCoins1 }) => {
     <View style={styles.container}>
 
       <ShopBox 
-        itemName="Poison"
+        itemName="poison"
         itemCost={0}
         itemImage={poison}
         userCoins={UserCoins1}
       />
 
       <ShopBox 
-        itemName="Bone"
+        itemName="bone"
         itemCost={75}
         itemImage={bone}
         userCoins={UserCoins1}
       />
 
       <ShopBox
-        itemName="Apple"
+        itemName="apple"
         itemCost={20}
         itemImage={apple}
         userCoins={UserCoins1}

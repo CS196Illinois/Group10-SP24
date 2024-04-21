@@ -12,19 +12,19 @@ const ToyRow = ( {UserCoins1} ) => {
       <Text style={styles.text}>Toys</Text>
       <View style={styles.container}>
         <ShopBox
-          itemName="Stuffed Mouse"
+          itemName="StuffedMouse"
           itemCost={100}
           itemImage={mouse}
           userCoins={UserCoins1}
         />
         <ShopBox
-          itemName="Rope Toy"
+          itemName="RopeToy"
           itemCost={75}
           itemImage={ropetoy}
           userCoins={UserCoins1}
         />
         <ShopBox
-          itemName="Tennis Ball"
+          itemName="TennisBall"
           itemCost={35}
           itemImage={tennisball}
           userCoins={UserCoins1}

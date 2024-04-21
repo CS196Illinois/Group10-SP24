@@ -1,16 +1,21 @@
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native'
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { getUser, updateCoins } from '../../db_commands';
+import { getUser, updateCoins, buyItem } from '../../db_commands';
 
-const ShopBox = ({ itemName, itemCost, itemImage, UserCoins }) => {
+const ShopBox = ({ itemName, itemCost, itemImage, userCoins }) => {
 
   
-  const Pressed = () => {
+  const Pressed = async () => {
+    console.log("pressed")
+    console.log(userCoins)
+    console.log(itemCost)
     
-    if ({UserCoins} > {itemCost}) {
-      buyItem(2, {itemName});
-      updateCoins(2, {UserCoins} - {itemCost});
+    if (userCoins > itemCost) {
+      console.log("buying item")
+      await buyItem(2, itemName);
+
+      // updateCoins(2, UserCoins - itemCost);
     }
   };
 

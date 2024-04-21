@@ -26,6 +26,7 @@ const ShopScreen = () => {
     }
 
     mySetCoins();
+    console.log("coin state: "+coinCounts)
   })
 
 

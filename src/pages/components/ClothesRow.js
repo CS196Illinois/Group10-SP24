@@ -12,19 +12,19 @@ const ClothesRow = ({UserCoins1}) => {
         <Text style={styles.text}> Clothes </Text>
     <View style={styles.container}>
       <ShopBox
-        itemName="Spiked Collar"
+        itemName="collar"
         itemCost={200}
         itemImage={collar}
         userCoins={UserCoins1}
         />
       <ShopBox
-        itemName="Pink Collar"
+        itemName="pinkCollar"
         itemCost={100}
         itemImage={pinkCollar}
         userCoins={UserCoins1}
         />
       <ShopBox
-        itemName="Black Hat"
+        itemName="BlackHat"
         itemCost={150}
         itemImage={blackHat}
         userCoins={UserCoins1}

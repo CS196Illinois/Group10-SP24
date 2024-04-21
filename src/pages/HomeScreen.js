@@ -199,7 +199,7 @@ const HomeScreen = () => {
 					setCurrentMood(updatedMood);
 					await updatePetHappiness(pet, updatedMood);
 				}
-				setWearingBlackCollar(!wearingBlackCollar);
+				setWearingHat(!wearingHat);
 			}
 		} else {
 			if (item.healthEffect) {
@@ -250,13 +250,13 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(50, 130, 190, 0.4)'
 	},
 	coinText: {
-		fontSize : 20,
+		fontSize : 17,
 		fontWeight: 'bold',
 		color: 'black',
 		opacity: 0.75,
 		position: 'absolute',
 		top: 20,
-		left: 15,
+		left: 10,
 	},
 	petImage : {
 		width: 200,
@@ -298,13 +298,14 @@ const styles = StyleSheet.create({
 		transform: [{ rotate: '-15deg' }]
 	},
 	hatStyle: {
-		height: 75, 
+		//height: 75, 
+		//top: 100, 
+		height: 120,
+		top: 60,
 		width: 120, 
 		position: 'absolute', 
-		left: 95, 
-		top: 185, 
+		left: 90, 
 		resizeMode: 'stretch', 
-		transform: [{ rotate: '-15deg' }]
 	}
 });
 

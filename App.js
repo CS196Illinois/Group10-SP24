@@ -16,6 +16,7 @@ class App extends Component {
       <NavigationContainer>
       <Tab.Navigator
         // set screenOptions to specify how the navbar should work
+        initialRouteName='Home'
         screenOptions={({ route }) => ({
 
           // tabBarIcon is an object with values assigned based on the route name
@@ -41,8 +42,8 @@ class App extends Component {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Tasks" component={TasksScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Shop" component={ShopScreen} />
       </Tab.Navigator>
     </NavigationContainer>

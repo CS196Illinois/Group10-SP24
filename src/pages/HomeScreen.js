@@ -4,6 +4,7 @@ import { supabase } from './initSupabase';
 import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
+import CoinCount from './components/CoinCount';
 import { getUser, getItem, getPetHappiness, getPetHunger, updatePetHappiness, updatePetHunger, updateCoins } from '../db_commands';
 
 // Importing Dog States
@@ -92,7 +93,6 @@ const HomeScreen = () => {
 			// console.log("Inside getAllUserInfo: we have items", tmp_items)
 			setItems(tmp_items);
 		}
-
 	};
 
 	/*
@@ -106,12 +106,22 @@ const HomeScreen = () => {
 		setUserInventoryAndMood();
 		// console.log('Current Inventory: ', inventory);
 		const interval = setInterval(async () => {
-			let updatedHealth = currentHealth - 1;
-			let updatedMood = currentMood - 1;
-			await updatePetHappiness(pet, updatedMood);
-			setCurrentMood(updatedMood);
-			await updatePetHunger(pet, updatedHealth);
-			setCurrentHealth(updatedHealth);
+			if (currentHealth > 0 && currentMood > 0) {
+				let updatedHealth = currentHealth - 1;
+				let updatedMood = currentMood - 1;
+				await updatePetHappiness(pet, updatedMood);
+				setCurrentMood(updatedMood);
+				await updatePetHunger(pet, updatedHealth);
+				setCurrentHealth(updatedHealth);
+			} else if (currentHealth > 0) {
+				let updatedHealth = currentHealth - 1;
+				await updatePetHunger(pet, updatedHealth);
+				setCurrentHealth(updatedHealth);
+			} else if (currentMood > 0) { // currentMood > 0
+				let updatedMood = currentMood - 1;
+				await updatePetHappiness(pet, updatedMood);
+				setCurrentMood(updatedMood);
+			} else { } // do nothing bc both are below zero
 		}, 45_000);
 		return () => clearInterval(interval);
 	}, []);
@@ -178,7 +188,8 @@ const HomeScreen = () => {
         		<View style={[styles.circle, { bottom: 30, left: 15 }]} />
 				<View style={[styles.dropShadow, { bottom: 330, left: 140 }]} />
       		</View>
-			<Text>User 2 Has {coins}.</Text>
+			<Text style={styles.coinText}>{coins} coins</Text>
+			{/* <Text>User 2 Has {coins}.</Text> */}
 			<HealthBar health={currentHealth} />
 			<MoodBar mood={currentMood} />
 
@@ -198,6 +209,15 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: 'rgba(50, 130, 190, 0.4)'
+	},
+	coinText: {
+		fontSize : 20,
+		fontWeight: 'bold',
+		color: 'black',
+		opacity: 0.75,
+		position: 'absolute',
+		top: 20,
+		left: 15,
 	},
 	petImage : {
 		width: 200,
@@ -241,22 +261,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-
-/*
-	Unused Code to display usernmaes and coin counts
-	const [usernames, setNames] = useState([]);
-	useEffect(() => {
-		updateUserNames();
-	}, []);
-
-	async function updateUserNames() {
-        const data = await getUserNames();
-		setNames(data);
-
-        await useItem(2, "cookie");
-	}
-
-	{usernames.map((user) => (
-		<Text key={user.user_name}>{user.user_name}, {user.num_coins}</Text>
-	))}
-	*/

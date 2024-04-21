@@ -4,33 +4,96 @@ import { supabase } from './initSupabase';
 import Inventory from '../components/Inventory';
 import HealthBar from '../components/HealthBar';
 import MoodBar from '../components/MoodBar';
-import { getUserNames, useItem } from '../db_commands';
+import { getUser, getItem, getPetHappiness, getPetHunger, updatePetHappiness, updatePetHunger, updateCoins } from '../db_commands';
 
+// Importing Dog States
 import dogHappy from '../assets/dogHappy.png';
 import dogSad from '../assets/dogSad.png';
 import dogNeutral from '../assets/dogMeh.png';
-import apple from '../assets/apple.png';
-import bone from '../assets/bone.png';
-import collar from '../assets/collar.png';
+// Importing foods
+import apple from './assets/apple.png';
+import poison from './assets/poison.png';
+import bone from './assets/bone.png';
+// Importing clothing
+import black_hat from './assets/BlackHat.png';
+import pink_collar from './assets/pinkCollar.png';
+import collar from './assets/collar.png';
 import collarCut from '../assets/collarCut.png';
-import pinkCollar from '../assets/pinkCollar.png';
 import pinkCollarFront from '../assets/pinkCollarFront.png'
-import poison from '../assets/poison.png'
 
 const HomeScreen = () => {
 
-	[currentHealth, setCurrentHealth] = useState(5);
-  	[currentMood, setCurrentMood] = useState(5);
+	[currentHealth, setCurrentHealth] = useState(0);
+  	[currentMood, setCurrentMood] = useState(0);
+	[pet, setPet] = useState(0);
+	[items, setItems] = useState([]);
+	[coins, setCoins] = useState(0);
 	[wearingPinkCollar, setWearingPinkCollar] = useState(false);
 	[wearingBlackCollar, setWearingBlackCollar] = useState(false);
 
-	items = [
-		{ name: 'Apple' , image: apple , healthEffect: 1, moodEffect:  0 },
-		{ name: 'Bone'  , image: bone  , healthEffect:  3, moodEffect:  2 },
-		{ name: 'Pink' , image: pinkCollar, clothing: true, clothesMood: 2},
-		{ name: 'Spikes', image: collar, clothing: true, clothesMood: 2},
-		{ name: 'Poison', image: poison , healthEffect: -5, moodEffect:  -5 }
-	];
+	async function getCoins() {
+		setCoins((await getUser(2)).num_coins);
+	}
+	
+	async function getUserPetStats() {
+		const user = await getUser(2);
+		setPet(user.pet);
+		const petHappiness = await getPetHappiness(user.pet);
+		const petHunger = await getPetHunger(user.pet);
+		setCurrentMood(petHappiness);
+		setCurrentHealth(petHunger);
+	}
+
+	async function setUserInventoryAndMood() {
+		const user = await getUser(2);
+		// console.log("Inside getAllUserInfo: ", user.food.concat(user.clothes, user.toys))
+		if (user.food != null) {
+			const item_names = user.food.concat(user.clothes, user.toys);
+			let tmp_items = [];
+			for (const item of item_names) {
+				var item_data;
+				if (item != null) {
+					console.log('Item name is: ', item)
+					item_data = await getItem(item);
+					switch(item) {
+						case "poison":
+							tmp_items.push({
+								name: item, image: poison, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "bone":
+							tmp_items.push({
+								name: item, image: bone, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "apple":
+							tmp_items.push({
+								name: item, image: apple, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "BlackHat":
+							tmp_items.push({
+								name: item, image: black_hat, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+						case "pinkCollar":
+							tmp_items.push({
+								name: item, image: pink_collar, type: item_data.type, 
+								healthEffect: item_data.hunger_level, moodEffect: item_data.happiness_level
+							});
+							break;
+					}
+				}
+			}
+			// console.log("Inside getAllUserInfo: we have items", tmp_items)
+			setItems(tmp_items);
+		}
+
+	};
 
 	/*
 	 * Every 10 seconds
@@ -38,11 +101,23 @@ const HomeScreen = () => {
 	 * Mood by 1 point
 	 */
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setCurrentHealth((prevHealth) => prevHealth - 1);
-			setCurrentMood((prevMood) => prevMood - 1);
-		}, 10_000);
-		return () => clearInterval(interval);
+		getCoins();
+		getUserPetStats();
+		setUserInventoryAndMood();
+		// console.log('Current Inventory: ', inventory);
+		// const interval = setInterval(() => {
+		// 	setCurrentHealth(async (prevHealth) => {
+		// 		const newHealth = prevHealth - 1;
+		// 		await updatePetHunger(pet, newHealth);
+		// 		return newHealth;
+		// 	});
+		// 	setCurrentMood(async (prevMood) => {
+		// 		const newMood = prevMood - 1;
+		// 		await updatePetHappiness(pet, newMood);
+		// 		return newMood;
+		// 	});
+		// }, 120_000);
+		// return () => clearInterval(interval);
 	}, []);
 
 	const determinePetImage = () => {
@@ -55,34 +130,47 @@ const HomeScreen = () => {
 		}
 	};
 	
-	const handleItemPress = (item) => {
-		if (item.healthEffect) {
-			setCurrentHealth((prevHealth) => Math.max(0, Math.min(prevHealth + item.healthEffect, 5)));
-		}
-		if (item.moodEffect) {
-			setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.moodEffect, 5)));
-		}
-		if (item.clothing) {
-			if (item.name == "Pink") {
-				
+	const handleItemPress = async (item) => {
+		let updatedHealth = currentHealth;
+		let updatedMood = currentMood;
+		if (item.type == "clothing") {
+			if (item.name == "pinkCollar") {
 				if (wearingBlackCollar) 
 					setWearingBlackCollar(false);
-
-				if (!wearingPinkCollar) 
-					setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.clothesMood, 5)));
-				
+				if (!wearingPinkCollar) {
+					updatedMood = Math.max(0, Math.min(currentMood + item.moodEffect, 5));
+					setCurrentMood(updatedMood);
+					await updatePetHappiness(pet, updatedMood);
+				}
 				setWearingPinkCollar(!wearingPinkCollar);
 			}
-
-			if (item.name == "Spikes") {
-				
+			if (item.name == "collar") {
 				if (wearingPinkCollar) 
 					setWearingPinkCollar(false);
-	
-				if (!wearingBlackCollar) 
-					setCurrentMood((prevMood) => Math.max(0, Math.min(prevMood + item.clothesMood, 5)));
-				
+				if (!wearingBlackCollar) {
+					updatedMood = Math.max(0, Math.min(currentMood + item.moodEffect, 5));
+					setCurrentMood(updatedMood);
+					await updatePetHappiness(pet, updatedMood);
+				}
 				setWearingBlackCollar(!wearingBlackCollar);
+			}
+			if (item.name == "BlackHat") {
+				// TODO: do same as above with adding on the blackHat onto the dog image
+				updatedMood = Math.max(0, Math.min(currentMood + item.moodEffect, 5));
+				setCurrentMood(updatedMood);
+				await updatePetHappiness(pet, updatedMood);
+			}
+		} else {
+			if (item.healthEffect) {
+				updatedHealth = Math.max(0, Math.min(currentHealth + item.healthEffect, 5));
+				console.log("The current health after poison is: ", updatedHealth);
+				await updatePetHunger(pet, updatedHealth);
+				setCurrentHealth(updatedHealth);
+			}
+			if (item.moodEffect) {
+				updatedMood = Math.max(0, Math.min(currentMood + item.moodEffect, 5));
+				await updatePetHappiness(pet, updatedMood);
+				setCurrentMood(updatedMood);
 			}
 		}
 	};
@@ -94,6 +182,7 @@ const HomeScreen = () => {
         		<View style={[styles.circle, { bottom: 30, left: 15 }]} />
 				<View style={[styles.dropShadow, { bottom: 330, left: 140 }]} />
       		</View>
+			<Text>User 2 Has {coins}.</Text>
 			<HealthBar health={currentHealth} />
 			<MoodBar mood={currentMood} />
 
@@ -101,6 +190,7 @@ const HomeScreen = () => {
 			
 			{wearingPinkCollar && <Image source={pinkCollarFront} style={styles.collarStyle} />}
 			{wearingBlackCollar && <Image source={collarCut} style={styles.collarStyle} />}
+			{/* TODO: black_hat statement similar as above */}
 
 			<Inventory items={items} onItemPress={handleItemPress}/>
 	

@@ -4,7 +4,7 @@ import ShopBox from './ShopBox'
 import Confirmation from './Confirmation'
 import collar from '../assets/collar.png'
 import pinkCollar from '../assets/pinkCollar.png'
-import blackHat from '../assets/BlackHat.jpg'
+import blackHat from '../assets/BlackHat.png'
 
 const ClothesRow = () => {
   return (

@@ -2,6 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const Inventory = ({ items, onItemPress }) => {
+  if (items.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Inventory</Text>
+        <Text>No items available.</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Inventory</Text>

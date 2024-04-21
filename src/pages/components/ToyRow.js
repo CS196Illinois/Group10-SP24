@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ShopBox from './ShopBox'
 import Confirmation from './Confirmation'
-import mouse from '../assets/StuffedMouse.jpg'
-import tennisball from '../assets/TennisBall.jpg'
-import ropetoy from '../assets/RopeToy.jpg'
+import mouse from '../assets/StuffedMouse.png'
+import tennisball from '../assets/TennisBall.png'
+import ropetoy from '../assets/RopeToy.png'
 
 const ToyRow = () => {
   return (

@@ -55,7 +55,7 @@ export async function updatePetHappiness(pet_id, incrementAmount) {
 
 export async function updatePetHunger(pet_id, incrementAmount) {
 	hunger_level = await getPetHunger(pet_id)
-	console.log("hunger level increase: "+hunger_level)
+	// console.log("hunger level increase: "+hunger_level)
 
 	const { data, error } = await supabase
 	.from('pets')
@@ -158,5 +158,4 @@ export async function useItem(user_id, item_name) {
 
 	await updatePetHappiness(user_data.pet, item_data.happiness_level)
 	await updatePetHunger(user_data.pet, item_data.hunger_level)
-
 }

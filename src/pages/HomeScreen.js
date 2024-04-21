@@ -35,6 +35,7 @@ const HomeScreen = () => {
 	[coins, setCoins] = useState(0);
 	[wearingPinkCollar, setWearingPinkCollar] = useState(false);
 	[wearingBlackCollar, setWearingBlackCollar] = useState(false);
+	[wearingHat, setWearingHat] = useState(false);
 
 	async function getCoins() {
 		setCoins((await getUser(2)).num_coins);
@@ -193,10 +194,12 @@ const HomeScreen = () => {
 				setWearingBlackCollar(!wearingBlackCollar);
 			}
 			if (item.name == "BlackHat") {
-				// TODO: do same as above with adding on the blackHat onto the dog image
-				updatedMood = Math.max(0, Math.min(currentMood + item.moodEffect, 5));
-				setCurrentMood(updatedMood);
-				await updatePetHappiness(pet, updatedMood);
+				if (!wearingHat) {
+					updatedMood = Math.max(0, Math.min(currentMood + item.moodEffect, 5));
+					setCurrentMood(updatedMood);
+					await updatePetHappiness(pet, updatedMood);
+				}
+				setWearingBlackCollar(!wearingBlackCollar);
 			}
 		} else {
 			if (item.healthEffect) {
@@ -233,7 +236,7 @@ const HomeScreen = () => {
 			
 			{wearingPinkCollar && <Image source={pinkCollarFront} style={styles.collarStyle} />}
 			{wearingBlackCollar && <Image source={collarCut} style={styles.collarStyle} />}
-			{/* TODO: black_hat statement similar as above */}
+			{wearingHat && <Image source={black_hat} style={styles.hatStyle} />}
 
 			<Inventory items={items} onItemPress={handleItemPress}/>
 	
@@ -286,6 +289,15 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 	},
 	collarStyle: {
+		height: 75, 
+		width: 120, 
+		position: 'absolute', 
+		left: 95, 
+		top: 185, 
+		resizeMode: 'stretch', 
+		transform: [{ rotate: '-15deg' }]
+	},
+	hatStyle: {
 		height: 75, 
 		width: 120, 
 		position: 'absolute', 

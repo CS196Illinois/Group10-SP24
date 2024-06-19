@@ -1,5 +1,3 @@
-Group Name: TEAM_NAME
-
 Complete tasks!
 
 ![Tasks Page](https://media.discordapp.net/attachments/573324187943305223/1253096343564456087/Screenshot_20240619_141727.png?ex=66749c69&is=66734ae9&hm=92d15da29fcb9aac59a7974a3a8c65508da8f029b0d152b18daa8954d0d03a6c&=&format=webp&quality=lossless&width=296&height=646)
